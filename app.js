@@ -7,6 +7,7 @@
 //Append them to the page in order.
 //Upon the end of their turn, probably a click event, move them from the top of the display to the bottom, while maintaining the correct initiative order. 
 
+
 //-------Global Variables---------//
 
 let charactersInCombat = [1, 7, 2, 25, 12, 14];
@@ -32,3 +33,4 @@ function sortCharactersDesc() {
 }
 
 sortCharactersDesc();
+
