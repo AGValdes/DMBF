@@ -10,13 +10,13 @@
 
 //-------Global Variables---------//
 
-let charactersInCombat = [1, 7, 2, 25, 12, 14];
-let sortedCharacters;
+let charactersInCombat = [];
+
 let characterForm = document.getElementById('add-character-form');
 
 let initListParentElement = document.getElementById('init-list');
 
-//-------Constructor and Prototypes-------------//
+//-------Constructor-------------//
 
 ///Takes in arguments: string name, integer initiative, and boolean isPlayer
 function Character(name, init, isPlayer) {
@@ -27,10 +27,24 @@ function Character(name, init, isPlayer) {
   charactersInCombat.push(this);
 }
 
-function sortCharactersDesc() {
-  sortedCharacters = charactersInCombat.sort(function (a, b) { return b - a });
-  console.log(sortedCharacters);
+
+//-------Helper Functions-------//
+
+///Takes in an 
+function sortCharactersDesc(charArr) {
+  var len = charArr.length;
+  for (var i = len - 1; i >= 0; i--) {
+    for (var j = 1; j <= i; j++) {
+      if (charArr[j - 1].Init > charArr[j].Init) {
+        var temp = charArr[j - 1].Init;
+        charArr[j - 1].Init = charArr[j].Init;
+        charArr[j].Init = temp;
+      }
+    }
+  }
+
+  return arr.reverse();
 }
 
-sortCharactersDesc();
+
 
