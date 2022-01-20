@@ -12,25 +12,26 @@
 
 let charactersInCombat = [];
 
-let characterForm = document.getElementById('add-character-form');
+let characterForm = document.getElementById('add-char-form');
 
 let initListParentElement = document.getElementById('init-list');
 
 //-------Constructor-------------//
 
-///Takes in arguments: string name, integer initiative, and boolean isPlayer
+///Takes in arguments: string name, integer initiative, and boolean isPlayer, makes instances of character objects. Upon creation these instances will then be pushed into the charactersInCombat array and sorted. 
 function Character(name, init, isPlayer) {
   this.Name = name;
   this.Init = init;
   this.isPlayer = isPlayer;
 
   charactersInCombat.push(this);
+  sortCharactersDesc(charactersInCombat);
 }
 
 
 //-------Helper Functions-------//
 
-///Takes in an 
+///Takes in the array of characters and sorts them using a bubble sort algorithm along with the reverse() built-in method to achieve descending order based on their Init property, which represents the initiative value they have calculated.
 function sortCharactersDesc(charArr) {
   var len = charArr.length;
   for (var i = len - 1; i >= 0; i--) {
@@ -43,8 +44,28 @@ function sortCharactersDesc(charArr) {
     }
   }
 
-  return arr.reverse();
+  return charArr.reverse();
+}
+
+//-------Form Event Handling-------//
+
+function handleSubmit(event) {
+
+  //prevent default and clear any inner html content that may already be there so we can avoid duplicates upon resubmition.
+  event.preventDefault();
+  initListParentElement.innerHTML = '';
+
+  console.log("hellooo");
+
+  let name = event.target.name.value;
+  let init = event.target.initValue.value;
+  let isPlayer = event.target.isPlayer.checked;
+
+  new Character(name, init, isPlayer);
+
+  console.log(charactersInCombat);
 }
 
 
-
+//---------Executable Code-----------//
+characterForm.addEventListener('submit', handleSubmit);
