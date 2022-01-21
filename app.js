@@ -35,21 +35,20 @@ function sortCharactersDesc(charArr) {
   var len = charArr.length;
   for (var i = len - 1; i >= 0; i--) {
     for (var j = 1; j <= i; j++) {
+
       if (charArr[j - 1].Init > charArr[j].Init) {
         var temp = charArr[j - 1];
         charArr[j - 1] = charArr[j];
         charArr[j] = temp;
       }
+
     }
   }
+  return charArr;
 
-  return charArr.reverse();
 }
 
 function displayCharacters() {
-  sortCharactersDesc(charactersInCombat);
-  console.log(charactersInCombat);
-
   charactersInCombat.forEach(element => {
     let charElement = document.createElement('li');
     charElement.textContent = element.Name;
@@ -65,10 +64,11 @@ function handleSubmit(event) {
   initListParentElement.innerHTML = '';
 
   let name = event.target.name.value;
-  let init = event.target.initValue.value;
+  let init = Number(event.target.initValue.value);
   let isPlayer = event.target.isPlayer.checked;
 
   new Character(name, init, isPlayer);
+  sortCharactersDesc(charactersInCombat);
   displayCharacters();
 }
 
