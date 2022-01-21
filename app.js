@@ -25,7 +25,6 @@ function Character(name, init, isPlayer) {
   this.isPlayer = isPlayer;
 
   charactersInCombat.push(this);
-  sortCharactersDesc(charactersInCombat);
 }
 
 
@@ -37,9 +36,9 @@ function sortCharactersDesc(charArr) {
   for (var i = len - 1; i >= 0; i--) {
     for (var j = 1; j <= i; j++) {
       if (charArr[j - 1].Init > charArr[j].Init) {
-        var temp = charArr[j - 1].Init;
-        charArr[j - 1].Init = charArr[j].Init;
-        charArr[j].Init = temp;
+        var temp = charArr[j - 1];
+        charArr[j - 1] = charArr[j];
+        charArr[j] = temp;
       }
     }
   }
@@ -47,6 +46,16 @@ function sortCharactersDesc(charArr) {
   return charArr.reverse();
 }
 
+function displayCharacters() {
+  sortCharactersDesc(charactersInCombat);
+  console.log(charactersInCombat);
+
+  charactersInCombat.forEach(element => {
+    let charElement = document.createElement('li');
+    charElement.textContent = element.Name;
+    initListParentElement.appendChild(charElement);
+  });
+}
 //-------Form Event Handling-------//
 
 function handleSubmit(event) {
@@ -55,17 +64,15 @@ function handleSubmit(event) {
   event.preventDefault();
   initListParentElement.innerHTML = '';
 
-  console.log("hellooo");
-
   let name = event.target.name.value;
   let init = event.target.initValue.value;
   let isPlayer = event.target.isPlayer.checked;
 
   new Character(name, init, isPlayer);
-
-  console.log(charactersInCombat);
+  displayCharacters();
 }
 
 
 //---------Executable Code-----------//
+
 characterForm.addEventListener('submit', handleSubmit);
