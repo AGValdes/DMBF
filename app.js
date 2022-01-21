@@ -50,6 +50,7 @@ function sortCharactersDesc(charArr) {
 function displayCharacters() {
   charactersInCombat.forEach(element => {
     let charElement = document.createElement('li');
+    charElement.className = "char";
     charElement.textContent = element.Name;
     initListParentElement.appendChild(charElement);
   });
