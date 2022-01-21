@@ -44,8 +44,7 @@ function sortCharactersDesc(charArr) {
 
     }
   }
-  return charArr;
-
+  return charArr.reverse();
 }
 
 function displayCharacters() {
