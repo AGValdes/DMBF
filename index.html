@@ -14,17 +14,25 @@
 
     <form id="add-char-form">
       <feildset>
-        <label>Character Name
-          <input type="text" name="name" />
-        </label>
-        <label>Initiative Value
-          <input type="text" name="initValue" />
-        </label>
-        <label>Player Character
-          <input type="radio" name="isPlayer" />
-        </label>
+        <div class="form-element-divider">
+          <label>Character Name
+            <input type="text" name="name" />
+          </label>
+        </div>
+        <div class="form-element-divider">
+          <label>Initiative Value
+            <input type="text" name="initValue" />
+          </label>
+        </div>
+        <div class="form-element-divider">
+          <label>Player Character
+            <input type="radio" name="isPlayer" />
+          </label>
+        </div>
       </feildset>
-      <input id="submit" type="submit" />
+      <div id="submit-button">
+        <input id="submit" type="submit" value="Add to Queue!" />
+      </div>
     </form>
 
     <ul id="init-list">

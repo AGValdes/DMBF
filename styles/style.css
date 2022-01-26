@@ -1,3 +1,33 @@
 body{
-  background-color:hotpink;
+background-color: darkgray;
 }
+
+main{
+ background-color: grey;
+}
+
+h1{
+  width:50%;
+  margin:auto;
+  text-align: center;
+  padding: 3%;
+  font-size: 2.5em;
+}
+
+#add-char-form{
+  background-color: lightgray;
+  width: 50%;
+  display: flex;
+  margin:auto;
+  font-size: 1.5em;
+}
+
+#submit-button{
+  margin: none;
+}
+
+.form-element-divider{
+  border: 2px 2px black;
+  margin: 8%;
+}
+
