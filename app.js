@@ -24,6 +24,10 @@ function Character(name, init, isPlayer) {
   this.Init = init;
   this.isPlayer = isPlayer;
 
+  this.PositionInQueue;
+  this.Next;
+  this.Previous;
+
   charactersInCombat.push(this);
 }
 
@@ -55,11 +59,19 @@ function displayCharacters() {
     initListParentElement.appendChild(charElement);
   });
 }
+
+function establishPosition(arr) {
+  for (var i = 0; i < arr.length; i++) {
+    arr[i].PositionInQueue = i + 1;
+    arr[i].Previous = arr[i - 1];
+    arr[i].Next = arr[i + 1];
+  }
+}
+
 //-------Form Event Handling-------//
 
 function handleSubmit(event) {
 
-  //prevent default and clear any inner html content that may already be there so we can avoid duplicates upon resubmition.
   event.preventDefault();
   initListParentElement.innerHTML = '';
 
@@ -68,8 +80,11 @@ function handleSubmit(event) {
   let isPlayer = event.target.isPlayer.checked;
 
   new Character(name, init, isPlayer);
+
   sortCharactersDesc(charactersInCombat);
+  establishPosition(charactersInCombat);
   displayCharacters();
+  console.log(charactersInCombat);
 }
 
 
