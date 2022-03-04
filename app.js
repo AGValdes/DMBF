@@ -51,13 +51,20 @@ function sortCharactersDesc(charArr) {
   return charArr.reverse();
 }
 
+
 function displayCharacters() {
+
   charactersInCombat.forEach(element => {
-    let charElement = document.createElement('li');
-    charElement.className = "char";
-    charElement.textContent = element.Name;
-    initListParentElement.appendChild(charElement);
+    if (element.isPlayer) {
+      $('#init-list').append('<li class="PC" >' + element.Name + '</li>');
+    }
+    else {
+      $('#init-list').append('<li class="NPC" >' + element.Name + '</li>');
+    }
   });
+
+  $('.PC').css("background-color", "green");
+  $('.NPC').css("background-color", "red");
 }
 
 function establishPosition(arr) {
@@ -84,6 +91,11 @@ function handleSubmit(event) {
   sortCharactersDesc(charactersInCombat);
   establishPosition(charactersInCombat);
   displayCharacters();
+
+  //reset form feilds after each character is added to the list
+  let form = document.getElementById('add-char-form');
+  form.reset();
+
   console.log(charactersInCombat);
 }
 
