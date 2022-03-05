@@ -1,10 +1,6 @@
 'use strict';
 
 //TODO: 
-//Take in form input for Character name and Initiative value, and make them into instances of character objects with a constructor function.
-//Push those instances into an array.
-//Sort them in decending order based on their initiative value.
-//Append them to the page in order.
 //Upon the end of their turn, probably a click event, move them from the top of the display to the bottom, while maintaining the correct initiative order. 
 
 
@@ -51,22 +47,33 @@ function sortCharactersDesc(charArr) {
   return charArr.reverse();
 }
 
-
+//Displays appends each character as an li element and assigns each one a class based on their "isPlayer" property for styling purposes later.
 function displayCharacters() {
-
   charactersInCombat.forEach(element => {
     if (element.isPlayer) {
-      $('#init-list').append('<li class="PC" >' + element.Name + '</li>');
+      $('#init-list').append('<li class="PC" >' + element.Init + "  " + element.Name + '</li>');
     }
     else {
-      $('#init-list').append('<li class="NPC" >' + element.Name + '</li>');
+      $('#init-list').append('<li class="NPC" >' + element.Init + "  " + element.Name + '</li>');
     }
   });
+
+  applyStylingToLiElements();
+}
+
+//Helper function to dynamically style the li elements as they appear on the DOM.
+function applyStylingToLiElements() {
+  $('li').css("height", "50px");
+  $('li').css("width", "75%");
+  $('li').css("text-align", "center");
+  $('li').css("padding-top", "5%");
+  $('li').css("font-size", "200%");
 
   $('.PC').css("background-color", "green");
   $('.NPC').css("background-color", "red");
 }
 
+//Gives character instances reference to where they are in the Queue
 function establishPosition(arr) {
   for (var i = 0; i < arr.length; i++) {
     arr[i].PositionInQueue = i + 1;
