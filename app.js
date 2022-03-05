@@ -9,7 +9,7 @@
 let charactersInCombat = [];
 
 let characterForm = document.getElementById('add-char-form');
-
+let endOfTurnButton = document.getElementById('end-of-turn');
 let initListParentElement = document.getElementById('init-list');
 
 //-------Constructor-------------//
@@ -51,10 +51,10 @@ function sortCharactersDesc(charArr) {
 function displayCharacters() {
   charactersInCombat.forEach(element => {
     if (element.isPlayer) {
-      $('#init-list').append('<li class="PC" >' + element.Init + "  " + element.Name + '</li>');
+      $('#init-list').append('<li class="PC" >' + element.Name + '</li>');
     }
     else {
-      $('#init-list').append('<li class="NPC" >' + element.Init + "  " + element.Name + '</li>');
+      $('#init-list').append('<li class="NPC" >' + element.Name + '</li>');
     }
   });
 
@@ -82,7 +82,7 @@ function establishPosition(arr) {
   }
 }
 
-//-------Form Event Handling-------//
+//-------Event Handling-------//
 
 function handleSubmit(event) {
 
@@ -106,7 +106,19 @@ function handleSubmit(event) {
   console.log(charactersInCombat);
 }
 
+function handleTurnOver(event) {
+  event.preventDefault();
+  initListParentElement.innerHTML = '';
+
+  let turnOverCharacter = charactersInCombat[0];
+  charactersInCombat.push(turnOverCharacter);
+  charactersInCombat.shift(charactersInCombat[0]);
+
+  establishPosition(charactersInCombat);
+  displayCharacters();
+}
 
 //---------Executable Code-----------//
 
 characterForm.addEventListener('submit', handleSubmit);
+endOfTurnButton.addEventListener('click', handleTurnOver);
