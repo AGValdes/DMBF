@@ -9,8 +9,10 @@
 let charactersInCombat = [];
 
 let characterForm = document.getElementById('add-char-form');
-let endOfTurnButton = document.getElementById('end-of-turn');
 let initListParentElement = document.getElementById('init-list');
+
+let endOfTurnButton = document.getElementById('end-of-turn');
+
 
 //-------Constructor-------------//
 
@@ -47,22 +49,34 @@ function sortCharactersDesc(charArr) {
   return charArr.reverse();
 }
 
+function establishPosition(arr) {
+  for (var i = 0; i < arr.length; i++) {
+    arr[i].PositionInQueue = i;
+    arr[i].Previous = arr[i - 1];
+    arr[i].Next = arr[i + 1];
+  }
+}
 //Displays appends each character as an li element and assigns each one a class based on their "isPlayer" property for styling purposes later.
 function displayCharacters() {
   charactersInCombat.forEach(element => {
     if (element.isPlayer) {
-      $('#init-list').append('<li class="PC" >' + element.Name + '</li>');
+      let childToBeAppended = '<li class="PC">' + element.Name + '<button class="move-up">^</button><button class="move-down" id="temp">v</button></li>'
+      $('#init-list').append(childToBeAppended);
+      $('#temp').attr("id", element.PositionInQueue);
     }
     else {
-      $('#init-list').append('<li class="NPC" >' + element.Name + '</li>');
+      let childToBeAppended = '<li class="NPC" >' + element.Name + '<button class="move-up">^</button> <button class="move-down" id="temp">v</button></li>'
+      $('#init-list').append(childToBeAppended);
+      $('#temp').attr("id", element.PositionInQueue);
     }
   });
 
-  applyStylingToLiElements();
+  applyStylingToDynamicElements();
+  giveMoveDownButtonsEventListeners();
 }
 
-//Helper function to dynamically style the li elements as they appear on the DOM.
-function applyStylingToLiElements() {
+//Helper function to dynamically style elements as they appear on the DOM.
+function applyStylingToDynamicElements() {
   $('li').css("height", "50px");
   $('li').css("width", "75%");
   $('li').css("text-align", "center");
@@ -71,23 +85,32 @@ function applyStylingToLiElements() {
 
   $('.PC').css("background-color", "green");
   $('.NPC').css("background-color", "red");
+
+  $('.move-up').css("margin-left", "20%");
 }
 
 //Gives character instances reference to where they are in the Queue
-function establishPosition(arr) {
-  for (var i = 0; i < arr.length; i++) {
-    arr[i].PositionInQueue = i + 1;
-    arr[i].Previous = arr[i - 1];
-    arr[i].Next = arr[i + 1];
-  }
+
+
+function giveMoveDownButtonsEventListeners() {
+  document.querySelectorAll('.move-down').forEach(item => {
+    item.addEventListener('click', event => {
+      handleMoveDownTheOrder();
+    })
+  })
 }
+
+//prevents page refresh and clears inner html of the ol container
+function prepareListForNewDisplay() {
+  event.preventDefault();
+  initListParentElement.innerHTML = '';
+}
+
 
 //-------Event Handling-------//
 
 function handleSubmit(event) {
-
-  event.preventDefault();
-  initListParentElement.innerHTML = '';
+  prepareListForNewDisplay();
 
   let name = event.target.name.value;
   let init = Number(event.target.initValue.value);
@@ -107,8 +130,7 @@ function handleSubmit(event) {
 }
 
 function handleTurnOver(event) {
-  event.preventDefault();
-  initListParentElement.innerHTML = '';
+  prepareListForNewDisplay();
 
   let turnOverCharacter = charactersInCombat[0];
   charactersInCombat.push(turnOverCharacter);
@@ -118,6 +140,12 @@ function handleTurnOver(event) {
   displayCharacters();
 }
 
+function handleMoveDownTheOrder(event) {
+  prepareListForNewDisplay();
+
+  console.log("we made it!");
+
+}
 //---------Executable Code-----------//
 
 characterForm.addEventListener('submit', handleSubmit);
